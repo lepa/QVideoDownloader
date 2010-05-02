@@ -9,10 +9,12 @@ SOURCES += main.cpp \
     Download/download.cpp \
     VDownloader/vdownloader.cpp \
     VDownloader/Youtube/youtube.cpp \
-    VDownloader/Youjizz/youjizz.cpp
+    VDownloader/Youjizz/youjizz.cpp \
+    VDownloader/Youporn/youporn.cpp
 HEADERS += mainwindow.h \
     Download/download.h \
     VDownloader/vdownloader.h \
     VDownloader/Youtube/youtube.h \
-    VDownloader/Youjizz/youjizz.h
+    VDownloader/Youjizz/youjizz.h \
+    VDownloader/Youporn/youporn.h
 FORMS += mainwindow.ui
