@@ -75,9 +75,9 @@ Download& Download::setCookie(const std::string &cookiestring)
 
 Download& Download::fileWrite(const QString& filename)
 {
-    QRegExp rx("http://(.+?)/");
+    QRegExp rx("http://(.+?)(/.+?)$");
     QTcpSocket sock;
-    QString dns;
+    QString dns, page;
     QFile* file;
     char* buffer;
     int pos;
@@ -85,6 +85,7 @@ Download& Download::fileWrite(const QString& filename)
     if ( ( pos = rx.indexIn(this->link)) > -1)
     {
         dns = rx.cap(1);
+		page = rx.cap(2);
     }
     else
     {
@@ -92,7 +93,7 @@ Download& Download::fileWrite(const QString& filename)
     }
 
     sock.connectToHost(dns, 80);
-    sock.write( ("GET "+this->link+"\r\n").toAscii() );
+    sock.write( ("GET "+page+"Host: "+dns+"\n"+this->cookies+"\n\n").toAscii() );
 
     file = new QFile(filename);
     file->open(QIODevice::WriteOnly);
@@ -143,7 +144,8 @@ QString* Download::getContent ()
     }
 
     sock.connectToHost(dns, 80);
-    sock.write( ("GET "+this->link+"\r\n").toAscii() );
+	
+    sock.write( ("GET "+this->link+"\n"+this->cookies+"\n\n").toAscii() );
 
     buffer = new char [100];
     int len;
