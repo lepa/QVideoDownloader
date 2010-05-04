@@ -1,5 +1,5 @@
 #include "download.h"
-
+#include <iostream>
 
 Download::Download(const char* url)
 {
@@ -67,7 +67,7 @@ Download& Download::setCookie(const QString& cookiestring)
     return *this;
 }
 
-Download& Download::setCookie(const std::string &cookiestring)
+Download& Download::setCookie(const std::string& cookiestring)
 {
     this->cookies = cookiestring.c_str();
     return *this;
@@ -75,7 +75,7 @@ Download& Download::setCookie(const std::string &cookiestring)
 
 Download& Download::fileWrite(const QString& filename)
 {
-    QRegExp rx("http://(.+?)(/.+?)$");
+    QRegExp rx("http://([^/]+)(/.+)$", Qt::CaseSensitive, QRegExp::RegExp2);
     QTcpSocket sock;
     QString dns, page;
     QFile* file;
@@ -85,7 +85,7 @@ Download& Download::fileWrite(const QString& filename)
     if ( ( pos = rx.indexIn(this->link)) > -1)
     {
         dns = rx.cap(1);
-		page = rx.cap(2);
+        page = rx.cap(2);
     }
     else
     {
@@ -126,16 +126,17 @@ Download& Download::fileWrite(const std::string& filename)
 
 QString* Download::getContent ()
 {
-    QRegExp rx("http://(.+?)/");
+    QRegExp rx("http://([^/]+)(/.+)$", Qt::CaseSensitive, QRegExp::RegExp2);
     QTcpSocket sock;
-    QString dns;
+    QString dns, page;
     QString* res = new QString;
     char* buffer;
     int pos;
 
-    if ( ( pos = rx.indexIn(this->link)) > -1)
+    if ( ( pos = rx.indexIn(this->link)) != -1)
     {
         dns = rx.cap(1);
+        page = rx.cap(2);
     }
     else
     {
@@ -145,15 +146,17 @@ QString* Download::getContent ()
 
     sock.connectToHost(dns, 80);
 	
-    sock.write( ("GET "+this->link+"\n"+this->cookies+"\n\n").toAscii() );
+    sock.write( ("GET "+page+"\nHost:"+dns+"\n"+this->cookies+"\n\n").toAscii() );
 
     buffer = new char [100];
     int len;
 
     while ((len = sock.read(buffer, 100)) > 0)
     {
-        res->append(QByteArray(buffer, len));
+		QByteArray b(buffer, len);
+        res->append(b);
     }
+	std::cout << res->toStdString() << std::endl;
 
     return res;
 }

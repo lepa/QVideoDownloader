@@ -3,7 +3,7 @@
 void Youtube::findDownLink()
 {
     Download* dl;
-    QRegExp rx ("(video_id=.+?)&.*?(&t=.+?)&");
+    QRegExp rx ("(video_id=[^&]+).*(&t=[^&]+)");
     QString* content;
     int pos;
 

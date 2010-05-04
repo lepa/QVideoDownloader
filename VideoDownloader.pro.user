@@ -104,7 +104,7 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SHELL=/bin/zsh</value>
-    <value type="QString">SHLVL=1</value>
+    <value type="QString">SHLVL=0</value>
     <value type="QString">TERM=linux</value>
     <value type="QString">USER=lepa</value>
     <value type="QString">XAUTHORITY=/home/lepa/.Xauthority</value>
@@ -156,7 +156,7 @@
     <value type="QString">QTDIR=/usr/share/qt4</value>
     <value type="QString">RUBYOPT=-rauto_gem</value>
     <value type="QString">SHELL=/bin/zsh</value>
-    <value type="QString">SHLVL=1</value>
+    <value type="QString">SHLVL=0</value>
     <value type="QString">TERM=linux</value>
     <value type="QString">USER=lepa</value>
     <value type="QString">XAUTHORITY=/home/lepa/.Xauthority</value>
